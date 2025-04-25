@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto - Sistema de Inventario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./CSS/estiloprincipal.css">
+    <style>
+      
+    </style>
+   
+</head>
+<body>
+
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <img src="tienda.png" alt="Tienda" class="loading-image">
+            <h2 class="loading-text">Cargando Sistema...</h2>
+        </div>
+    </div>
+
+    <!-- Barra lateral -->
+    <div class="sidebar d-flex flex-column p-3">
+        <h4 class="text-center mb-4">Inventario</h4>
+        <a href="#dashboard" class="nav-link active"> <i class="fas fa-chart-line"></i> Panel de control <span id="productos-count-sidebar" class="badge bg-danger">0</span></a>
+        <a href="./Usuario.html" class="nav-link"> <i class="fas fa-user"></i> Usuarios <span id="usuarios-count-sidebar" class="badge bg-danger">0</span></a>
+        <a href="./producto.html" class="nav-link"> <i class="fas fa-box"></i> Productos <span id="productos-count-sidebar" class="badge bg-danger">0</span></a>
+        <a href="./venta.html" class="nav-link"> <i class="fas fa-shopping-cart"></i> Ventas <span id="ventas-count-sidebar" class="badge bg-danger">0</span></a>
+    </div>  
+    <!-- Contenido principal -->
+   
+    <div class="content">
+       
+        
+        <div id="dashboard" class="container-fluid">
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Usuarios</h5>
+                                <h3 id="usuarios-count">0</h3>
+                            </div>
+                            <i class="fa fa-user card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Categorías</h5>
+                                <h3 id="categorias-count">0</h3>
+                            </div>
+                            <i class="fa fa-list card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Productos</h5>
+                                <h3 id="productos-count">0</h3>
+                            </div>
+                            <i class="fa fa-box card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Ventas</h5>
+                                <h3 id="ventas-count">0</h3>
+                            </div>
+                            <i class="fa fa-shopping-cart card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>   
+        <div id="productos" class="container">
+            <div class="header text-center mb-4">
+                <h2>Gestión de Productos</h2>
+            </div>
+            <div class="row justify-content-center">
+                <!-- Card para Agregar Producto -->
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="add-product">
+                        <div class="card-body">
+                            <i class="fas fa-plus-circle fa-3x mb-3"></i>
+                            <h5 class="card-title">Agregar Producto</h5>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Card para Modificar Producto -->
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="edit-product">
+                        <div class="card-body">
+                            <i class="fas fa-edit fa-3x mb-3"></i>
+                            <h5 class="card-title">Modificar Producto</h5>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Card para Eliminar Producto -->
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="delete-product">
+                        <div class="card-body">
+                            <i class="fas fa-minus-circle fa-3x mb-3"></i>
+                            <h5 class="card-title">Eliminar Producto</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Formulario para agregar, modificar o eliminar productos -->
+            <div id="form-container" class="mt-4" style="display: none;">
+                <h2 id="form-title"></h2>
+                <form id="product-form">
+                    <div class="mb-3" id="product-id-container" style="display: none;">
+                        <label for="productId" class="form-label">ID del Producto</label>
+                        <input type="text" class="form-control" id="productId">
+                    </div>
+                    <div class="mb-3">
+                        <label for="proveedor" class="form-label">Proveedor</label>
+                        <select id="proveedor" class="form-select">
+                            <option value="Sony">Sony</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="LG">LG</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="producto" class="form-label">Producto</label>
+                        <input type="text" id="producto" class="form-control" placeholder="Nombre del producto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" id="precio" step="0.01" class="form-control" placeholder="Precio del producto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" id="cantidad" class="form-control" placeholder="Cantidad del producto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" id="foto" class="form-control" accept="image/*">
+                        <div id="img-preview-container" class="position-relative mt-2">
+                            <img id="img-preview" class="img-preview" src="#" alt="" style="display: none;">
+                            <button type="button" id="btn-remove-img" class="btn-remove-img" style="display: none;">&times;</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                </form>
+            </div>
+        </div>
+        
+     
+    </div>    
+
+    
+    
+    <script>
+
+// Mostrar el formulario con la acción correcta
+document.querySelectorAll('.action-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const action = this.id; // Acción seleccionada: 'add-product', 'edit-product', 'delete-product'
+        let formTitle = "";
+        document.getElementById('product-id-container').style.display = 'none'; // Ocultar ID para agregar
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('product-form').setAttribute('data-action', action);
+
+        // Cambiar el título del formulario y los campos visibles según la acción
+        switch (action) {
+            case "add-product":
+                formTitle = "Agregar Producto";
+                break;
+            case "edit-product":
+                formTitle = "Modificar Producto";
+                document.getElementById('product-id-container').style.display = 'block'; // Mostrar el campo de ID
+                break;
+            case "delete-product":
+                formTitle = "Eliminar Producto";
+                document.getElementById('product-id-container').style.display = 'block'; // Mostrar el campo de ID
+                break;
+        }
+
+        document.getElementById('form-title').textContent = formTitle;
+    });
+});
+
+// Función para manejar el envío del formulario (agregar, modificar o eliminar producto)
+document.getElementById('product-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evitar el comportamiento por defecto del formulario
+
+    const productId = document.getElementById('productId').value; // ID del producto
+    const proveedor = document.getElementById('proveedor').value;
+    const producto = document.getElementById('producto').value;
+    const precio = document.getElementById('precio').value;
+    const cantidad = document.getElementById('cantidad').value;
+
+    // Verificar que los campos necesarios no estén vacíos
+    if (!producto || !precio || !cantidad || !proveedor) {
+        alert("Por favor, complete todos los campos.");
+        return;
+    }
+
+    let url = 'http://127.0.0.1:5000/agregar-producto'; // URL por defecto para agregar
+    let method = 'POST'; // Método por defecto
+    let data = { proveedor, producto, precio, cantidad }; // Datos por defecto
+
+    // Si hay un productId, estamos en el modo de modificación o eliminación
+    if (productId) {
+        // Si estamos modificando
+        if (document.getElementById('form-title').textContent === "Modificar Producto") {
+            url = 'http://127.0.0.1:5000/modificar-producto';
+            method = 'PUT';
+            data.id = productId; // Añadir el ID para la modificación
+        }
+        // Si estamos eliminando
+        else if (document.getElementById('form-title').textContent === "Eliminar Producto") {
+            url = 'http://127.0.0.1:5000/eliminar-producto';
+            method = 'DELETE';
+            data.id = productId; // Añadir el ID para la eliminación
+        }
+    }
+
+    // Enviar la solicitud correspondiente al backend
+    fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        // Si la operación fue exitosa, puedes ocultar el formulario
+        document.getElementById('form-container').style.display = 'none';
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+
+
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("form-agregar-producto");
+            const fotoInput = document.getElementById("foto");
+            const imgPreview = document.getElementById("img-preview");
+            const btnRemoveImg = document.getElementById("btn-remove-img");
+            const productosCount = document.getElementById("productos-count");
+            const productosCountSidebar = document.getElementById("productos-count-sidebar");
+        
+            fotoInput.addEventListener("change", () => {
+                const file = fotoInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        imgPreview.src = e.target.result;
+                        imgPreview.style.display = "block";
+                        btnRemoveImg.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+    
+            btnRemoveImg.addEventListener("click", () => {
+                imgPreview.src = "";
+                imgPreview.style.display = "none";
+                btnRemoveImg.style.display = "none";
+                fotoInput.value = "";
+            });
+    
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+    
+                const producto = document.getElementById("producto").value;
+                const precio = parseFloat(document.getElementById("precio").value);
+                const cantidad = document.getElementById("cantidad").value;
+    
+                if (producto && precio && cantidad) {
+                    alert("Producto agregado correctamente");
+                    const currentCount = parseInt(productosCount.textContent) || 0;
+                    const currentcoun2=parseInt(productosCountSidebar.textContent) || 0;
+                    const newCount = currentCount + 1;
+                    const newCount2=currentcoun2+1;
+                    productosCount.textContent = newCount;
+                    productosCountSidebar.textContent = newCount;
+    
+                    form.reset();
+                    imgPreview.style.display = "none";
+                    btnRemoveImg.style.display = "none";
+                } else {
+                    alert("Por favor, completa todos los campos");
+                }
+            });
+        });
+           window.onload = function() {
+       
+   
+        document.getElementById('loading-screen').style.display = 'none'; // Ocultar la pantalla de carga
+    };
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="./agregarproducto.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
